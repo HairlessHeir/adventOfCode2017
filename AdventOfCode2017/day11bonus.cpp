@@ -13,6 +13,7 @@ int main()
 
 	int x = 0;
 	int z = 0;
+	int max = 0;
 	int distance = 0;
 
 	while(std::getline(inFile,line))
@@ -31,14 +32,14 @@ int main()
 			else if(!token.compare("sw")){x--; z++;}
 			else if(!token.compare("nw")){x--;}
 		    //std::cout << token << " : (" << x << "," << z << ")" << std::endl;
-		    
+		    distance = (abs(x)+abs(z)+abs(-x-z))/2;
+		    if(distance > max) max = distance;
 		    line.erase(0, pos + 1);
 		}
 	}
 
 	//std::cout << "x: " << x << "  y: " << z << std::endl;
-	distance = (abs(x)+abs(z)+abs(-x-z))/2;
-	std::cout << distance << std::endl;
+	std::cout << max << std::endl;
 
 	inFile.close();
 	return 0;

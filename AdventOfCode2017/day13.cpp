@@ -46,95 +46,87 @@ int main()
 	int delayedCounterMAX = 0;
 	bool canGo = false;
 	do{
-		while(counter < maximumDepth+1)
-		{
-			if(canGo){
-				if(std::find(firewallKeys.begin(), firewallKeys.end(), counter) != firewallKeys.end())
-				{
-				 	if(firewall[counter][0] == true)
-				 	{
-				 		totalScore+=counter*firewall[counter].size();
-				 	}
-				}
-			}
-
-			//RangeTrackerMove
-			for(int i=0; i<firewallKeys.size(); i++)
+	while(counter < maximumDepth+1)
+	{
+		if(canGo){
+			if(std::find(firewallKeys.begin(), firewallKeys.end(), counter) != firewallKeys.end())
 			{
-				if(traceDirection[i])
-				{
-					//going down
-					int currentRange;
-					for(int j = 0 ; j < firewall[firewallKeys[i]].size() ; j++)
-					{
-						if(firewall[firewallKeys[i]][j])
-						{
-							currentRange = j;
-							break;
-						}
-					}
+			 	if(firewall[counter][0] == true)
+			 	{
+			 		totalScore+=counter*firewall[counter].size();
+			 	}
+			}
+		}
 
-					//std::cout << firewallKeys[i] << " -> " << currentRange << " : " << counter << std::endl;
-					firewall[firewallKeys[i]][currentRange] = false;
-					if(currentRange == firewall[firewallKeys[i]].size()-1)
+		//RangeTrackerMove
+		for(int i=0; i<firewallKeys.size(); i++)
+		{
+			if(traceDirection[i])
+			{
+				//going down
+				int currentRange;
+				for(int j = 0 ; j < firewall[firewallKeys[i]].size() ; j++)
+				{
+					if(firewall[firewallKeys[i]][j])
 					{
-						traceDirection[i] = false;
-						firewall[firewallKeys[i]][currentRange-1] = true;
+						currentRange = j;
+						break;
 					}
-					else
-					{
-						firewall[firewallKeys[i]][currentRange+1] = true;
-					}
-					
+				}
+
+				//std::cout << firewallKeys[i] << " -> " << currentRange << " : " << counter << std::endl;
+				firewall[firewallKeys[i]][currentRange] = false;
+				if(currentRange == firewall[firewallKeys[i]].size()-1)
+				{
+					traceDirection[i] = false;
+					firewall[firewallKeys[i]][currentRange-1] = true;
 				}
 				else
 				{
-					//going up
-					int currentRange;
-					for(int j = 0 ; j < firewall[firewallKeys[i]].size() ; j++)
-					{
-						if(firewall[firewallKeys[i]][j])
-						{
-							currentRange = j;
-							break;
-						}
-					}
-
-					//std::cout << firewallKeys[i] << " <- " << currentRange << " : " << counter << std::endl;
-					firewall[firewallKeys[i]][currentRange] = false;
-					if(currentRange == 0)
-					{
-						traceDirection[i] = true;
-						firewall[firewallKeys[i]][currentRange+1] = true;
-					}
-					else
-					{
-						firewall[firewallKeys[i]][currentRange-1] = true;
-					}
+					firewall[firewallKeys[i]][currentRange+1] = true;
 				}
+				
 			}
-
-			if(canGo) counter++;
 			else
 			{
-				if(delayedCounter<delayedCounterMAX)
+				//going up
+				int currentRange;
+				for(int j = 0 ; j < firewall[firewallKeys[i]].size() ; j++)
 				{
-					delayedCounter++;
+					if(firewall[firewallKeys[i]][j])
+					{
+						currentRange = j;
+						break;
+					}
 				}
-				if(delayedCounter == delayedCounterMAX)
+
+				//std::cout << firewallKeys[i] << " <- " << currentRange << " : " << counter << std::endl;
+				firewall[firewallKeys[i]][currentRange] = false;
+				if(currentRange == 0)
 				{
-					canGo = true;
+					traceDirection[i] = true;
+					firewall[firewallKeys[i]][currentRange+1] = true;
+				}
+				else
+				{
+					firewall[firewallKeys[i]][currentRange-1] = true;
 				}
 			}
 		}
 
-		delayedCounterMAX++;
-		delayedCounter = 0;
-		canGo = false;
-
-		std::cout << "DAMAGE: " << totalScore << std::endl;
+		if(canGo) counter++;
+		else
+		{
+			if(delayedCounter<delayedCounterMAX)
+			{
+				delayedCounter++;
+			}
+			if(delayedCounter ==)
+		}
+	}
 	} while(totalScore!=0);
 
+	std::cout << "DAMAGE: " << totalScore << std::endl;
 	inFile.close();
 	return 0;
 }
